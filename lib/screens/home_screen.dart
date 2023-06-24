@@ -11,17 +11,26 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> messageTypes = ['SMS', 'MMS', 'Voice'];
   String _selectedType = 'Landline and Mobile';
   List<String> dropdownItems = ['Web platform', 'Landline and Mobile'];
-  List<String> countriesList = ['United states', 'United Kingdom'];
-  List<String> americanNumbersList = [
-    '+1(201)123-45-67',
-    '+1(201)123-45-67',
-    '+1(201)123-45-67'
-  ];
-  List<String> ukNumbersList = [
-    '+44(201)123-45-67',
-    '+44(201)123-45-67',
-    '+44(201)123-45-67'
-  ];
+  bool _isExpanded = true;
+
+  Map<String, String> countryFlags = {
+    'United states':
+        'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/2560px-Flag_of_the_United_States.svg.png',
+    'United Kingdom':
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png'
+  };
+  Map<String, List<String>> countries = {
+    'United states': [
+      '+1(201)123-45-67',
+      '+1(201)123-45-67',
+      '+1(201)123-45-67'
+    ],
+    'United Kingdom': [
+      '+44(201)123-45-67',
+      '+44(201)123-45-67',
+      '+44(201)123-45-67'
+    ]
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -29,32 +38,51 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color.fromARGB(255, 245, 210, 222),
-        leading: const CircleAvatar(
-          backgroundImage: NetworkImage(
-              'https://w7.pngwing.com/pngs/485/867/png-transparent-avatar-of-a-chinese-man.png'),
+        flexibleSpace: Padding(
+          padding: EdgeInsets.all(8),
+          child: AppBar(
+            leading: const CircleAvatar(
+              radius: 50,
+              backgroundImage: NetworkImage(
+                  'https://w7.pngwing.com/pngs/485/867/png-transparent-avatar-of-a-chinese-man.png'),
+            ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.equalizer_rounded),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.mail_outline),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_outlined),
+              ),
+            ],
+            elevation: 0,
+            backgroundColor: Color.fromARGB(255, 245, 210, 222),
+          ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.equalizer_rounded),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.mail_outline),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_outlined),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30), color: Colors.white),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            Offset(0, 3), // defines the position of the shadow
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white),
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
@@ -85,9 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 20),
                           decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 70, 65, 149),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+                            color: Color.fromARGB(255, 70, 65, 149),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
                           child: Text(
                             type,
                             style: const TextStyle(
@@ -103,8 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 12,
                     ),
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 2),
                       width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -134,110 +162,143 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           }),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
-                    Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                              width: 1,
-                              color: Color.fromARGB(255, 74, 73, 73),
+                    GestureDetector(
+                      onTap: () => setState(() {
+                        _isExpanded = !_isExpanded;
+                      }),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                width: 1,
+                                color: Color.fromARGB(255, 74, 73, 73),
+                              ),
                             ),
+                            child: _isExpanded
+                                ? const Icon(Icons.expand_less)
+                                : const Icon(Icons.expand_more),
                           ),
-                          child: const Icon(Icons.expand_more),
-                        ),
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        const Text('Show numbers without verification')
-                      ],
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          const Text('Show numbers without verification')
+                        ],
+                      ),
                     )
                   ],
                 )),
-            Column(
-              children: countriesList.map((String item) {
+            AnimatedOpacity(
+              opacity: _isExpanded ? 1 : 0,
+              duration: const Duration(milliseconds: 300),
+              child: Column(
+                  children: countries.keys.map((String country) {
                 return Column(
                   children: [
-      Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: const DecorationImage(
-                              image: NetworkImage(
-                                  'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/2560px-Flag_of_the_United_States.svg.png'),
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                       Text(
-                        item,
-                        style:
-                            const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      color: Colors.white),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  child: Column(
-                      children: americanNumbersList.map((String item) {
-                    return Padding(
-                      padding: EdgeInsets.all(8.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Icon(
-                            Icons.phone_iphone_outlined,
-                            size: 26,
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                image: NetworkImage(countryFlags[country]!),
+                              ),
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(item,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold, fontSize: 14)),
-                              const Text('New Jersey'),
-                            ],
+                          const SizedBox(
+                            width: 10,
                           ),
-                          const Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 15,
-                                backgroundColor: Colors.blue,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              CircleAvatar(
-                                radius: 15,
-                                backgroundColor: Colors.blue,
-                              ),
-                            ],
+                          Text(
+                            country,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           ),
                         ],
                       ),
-                    );
-                  }).toList()),
-                )
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // defines the position of the shadow
+                      ),
+                    ],
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      child: Column(
+                          children: countries[country]!.map((String item) {
+                        return Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.phone_iphone_outlined,
+                                    size: 28,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        item,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14),
+                                      ),
+                                      const Text('New Jersey'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.blue,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList()),
+                    )
                   ],
                 );
-              }).toList()
+              }).toList()),
             )
           ],
         ),

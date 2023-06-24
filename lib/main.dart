@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color.fromARGB(255, 245, 210, 222),
         primaryColor: Color.fromARGB(255, 245, 210, 222)
       ),
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }
@@ -36,12 +36,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   static const color = Color.fromARGB(255, 233, 181, 198);
+  final activeIconColor = const Color.fromARGB(255, 74, 73, 73);
 
   static final List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    CallsScreen(),
-    MessagesScreen(),
-    ContactsPage()
+    const HomeScreen(),
+    const CallsScreen(),
+    const MessagesScreen(),
+    const ContactsPage()
   ];
 
   void _onItemTapped(int index) {
@@ -80,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
         onTap: _onItemTapped,
         showUnselectedLabels: true,
         unselectedItemColor: Color.fromARGB(255, 185, 184, 184),
-        selectedItemColor: Color.fromARGB(255, 74, 73, 73),
+        selectedItemColor: activeIconColor,
       ),
     );
   }
