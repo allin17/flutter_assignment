@@ -90,14 +90,14 @@ class CountryNumbers extends StatelessWidget {
                               const Row(
                                 children: [
                                   CircleAvatar(
-                                    radius: 15,
+                                    radius: 12,
                                     backgroundColor: Colors.blue,
                                   ),
                                   SizedBox(
                                     width: 5,
                                   ),
                                   CircleAvatar(
-                                    radius: 15,
+                                    radius: 12,
                                     backgroundColor: Colors.blue,
                                   ),
                                 ],
