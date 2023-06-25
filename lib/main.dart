@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Color.fromARGB(255, 245, 210, 222),
-        primaryColor: Color.fromARGB(255, 245, 210, 222)
+        primaryColor: const Color.fromARGB(255, 245, 210, 222),
+        focusColor: const Color.fromARGB(255, 74, 73, 73),
       ),
       home: const MainScreen(),
     );
@@ -35,7 +36,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-  static const color = Color.fromARGB(255, 233, 181, 198);
   final activeIconColor = const Color.fromARGB(255, 74, 73, 73);
 
   static final List<Widget> _widgetOptions = <Widget>[
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Color.fromARGB(255, 245, 210, 222),
+        backgroundColor: Theme.of(context).primaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -80,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         showUnselectedLabels: true,
-        unselectedItemColor: Color.fromARGB(255, 185, 184, 184),
+        unselectedItemColor: const Color.fromARGB(255, 185, 184, 184),
         selectedItemColor: activeIconColor,
       ),
     );

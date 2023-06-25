@@ -1,4 +1,8 @@
+import 'package:assignment/widgets/country_numbers.dart';
+
+import '../widgets/search_input.dart';
 import 'package:flutter/material.dart';
+import '../utils/home_screen_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,60 +12,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> messageTypes = ['SMS', 'MMS', 'Voice'];
+  
   String _selectedType = 'Landline and Mobile';
   List<String> dropdownItems = ['Web platform', 'Landline and Mobile'];
   bool _isExpanded = true;
-
-  Map<String, String> countryFlags = {
-    'United states':
-        'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/2560px-Flag_of_the_United_States.svg.png',
-    'United Kingdom':
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png'
-  };
-  Map<String, List<String>> countries = {
-    'United states': [
-      '+1(201)123-45-67',
-      '+1(201)123-45-67',
-      '+1(201)123-45-67'
-    ],
-    'United Kingdom': [
-      '+44(201)123-45-67',
-      '+44(201)123-45-67',
-      '+44(201)123-45-67'
-    ]
-  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color.fromARGB(255, 245, 210, 222),
+        backgroundColor: Theme.of(context).primaryColor,
         flexibleSpace: Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: AppBar(
             leading: const CircleAvatar(
-              radius: 50,
               backgroundImage: NetworkImage(
-                  'https://w7.pngwing.com/pngs/485/867/png-transparent-avatar-of-a-chinese-man.png'),
+                'https://d5xydlzdo08s0.cloudfront.net/media/celebrities/16647/magnusbiofinal__L.jpg'
+              ),
             ),
             actions: [
               IconButton(
+                color: Theme.of(context).focusColor,
                 onPressed: () {},
                 icon: const Icon(Icons.equalizer_rounded),
               ),
               IconButton(
+                color: Theme.of(context).focusColor,
                 onPressed: () {},
                 icon: const Icon(Icons.mail_outline),
               ),
               IconButton(
+                color: Theme.of(context).focusColor,
                 onPressed: () {},
                 icon: const Icon(Icons.notifications_outlined),
               ),
             ],
             elevation: 0,
-            backgroundColor: Color.fromARGB(255, 245, 210, 222),
+            backgroundColor: Theme.of(context).primaryColor,
           ),
         ),
       ),
@@ -78,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         spreadRadius: 2,
                         blurRadius: 5,
                         offset:
-                            Offset(0, 3), // defines the position of the shadow
+                            const Offset(0, 3), // defines the position of the shadow
                       ),
                     ],
                     borderRadius: BorderRadius.circular(30),
@@ -86,22 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(30),
                 child: Column(
                   children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.search),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                hintText: 'Country name',
-                                hintStyle: TextStyle(
-                                    fontWeight: FontWeight.w500, fontSize: 18)),
-                          ),
-                        ),
-                      ],
-                    ),
+                    const SearchInput(),
                     const SizedBox(
                       height: 10,
                     ),
@@ -176,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(
                                 width: 1,
-                                color: Color.fromARGB(255, 74, 73, 73),
+                                color: const Color.fromARGB(255, 74, 73, 73),
                               ),
                             ),
                             child: _isExpanded
@@ -195,110 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
             AnimatedOpacity(
               opacity: _isExpanded ? 1 : 0,
               duration: const Duration(milliseconds: 300),
-              child: Column(
-                  children: countries.keys.map((String country) {
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: NetworkImage(countryFlags[country]!),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            country,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset:
-                            const Offset(0, 3), // defines the position of the shadow
-                      ),
-                    ],
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.white),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 15),
-                      child: Column(
-                          children: countries[country]!.map((String item) {
-                        return Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.phone_iphone_outlined,
-                                    size: 28,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        item,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
-                                      ),
-                                      const Text('New Jersey'),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: Colors.blue,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  CircleAvatar(
-                                    radius: 15,
-                                    backgroundColor: Colors.blue,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList()),
-                    )
-                  ],
-                );
-              }).toList()),
+              child: const CountryNumbers()
             )
           ],
         ),

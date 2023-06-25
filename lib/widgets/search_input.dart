@@ -5,15 +5,18 @@ class SearchInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
-        const Icon(Icons.search),
-        const TextField(
-          decoration: InputDecoration(
-            border: UnderlineInputBorder(),
-            hintText: 'Country name',
-            hintStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 19),
-            //prefixIcon: Icon(Icons.search),
+        Icon(Icons.search),
+        SizedBox(
+          width: 16,
+        ),
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+                hintText: 'Country name',
+                hintStyle:
+                    TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
           ),
         ),
       ],
