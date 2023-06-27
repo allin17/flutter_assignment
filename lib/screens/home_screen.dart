@@ -1,4 +1,5 @@
 import 'package:assignment/widgets/country_numbers.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/search_input.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    HomeScreenData homeScreenProvider = Provider.of<HomeScreenData>(context, listen: true);
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -73,15 +76,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                        children: messageTypes.map((String type) {
+                  Wrap(
+                    children: homeScreenProvider.messageTypes.map((String type) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 20),
+                            vertical: 5,
+                            horizontal: 20,
+                          ),
                           decoration: const BoxDecoration(
                             color: Color.fromARGB(255, 70, 65, 149),
                             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -96,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       );
-                    }).toList()),
+                    }).toList(),
                   ),
                   const SizedBox(
                     height: 12,
@@ -168,9 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             AnimatedOpacity(
-                opacity: _isExpanded ? 1 : 0,
-                duration: const Duration(milliseconds: 300),
-                child: const CountryNumbers())
+              opacity: _isExpanded ? 1 : 0,
+              duration: const Duration(milliseconds: 300),
+              child: const CountryNumbers(),
+            )
           ],
         ),
       ),

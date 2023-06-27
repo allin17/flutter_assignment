@@ -1,4 +1,9 @@
-Map<String, String> countryFlags = {
+class HomeScreenData {
+  String searchValue = '';
+  void setSearchValue(String val) {
+    searchValue = val;
+  }
+  Map<String, String> countryFlags = {
     'United states':
         'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/2560px-Flag_of_the_United_States.svg.png',
     'United Kingdom':
@@ -18,3 +23,4 @@ Map<String, String> countryFlags = {
   };
 
   List<String> messageTypes = ['SMS', 'MMS', 'Voice'];
+}

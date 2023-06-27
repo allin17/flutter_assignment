@@ -1,19 +1,47 @@
+import 'package:assignment/utils/home_screen_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class SearchInput extends StatelessWidget {
+class SearchInput extends StatefulWidget {
   const SearchInput({super.key});
 
   @override
+  State<SearchInput> createState() => _SearchInputState();
+}
+
+class _SearchInputState extends State<SearchInput> {
+  late TextEditingController _searchController;
+  @override
+  void initState() {
+    final homeScreenProvider =
+        Provider.of<HomeScreenData>(context, listen: false);
+
+    super.initState();
+    _searchController =
+        TextEditingController(text: homeScreenProvider.searchValue);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Row(
+    final homeScreenProvider =
+        Provider.of<HomeScreenData>(context, listen: false);
+    return Row(
       children: [
-        Icon(Icons.search),
-        SizedBox(
+        const Icon(Icons.search),
+        const SizedBox(
           width: 16,
         ),
         Expanded(
           child: TextField(
-            decoration: InputDecoration(
+            controller: _searchController,
+            onChanged: homeScreenProvider.setSearchValue,
+            decoration: const InputDecoration(
                 hintText: 'Country name',
                 hintStyle:
                     TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
