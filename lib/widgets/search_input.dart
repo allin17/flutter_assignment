@@ -1,7 +1,9 @@
-import 'package:assignment/utils/home_screen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:assignment/utils/home_screen_data.dart';
+
+/// Search [TextField] with search icon
 class SearchInput extends StatefulWidget {
   const SearchInput({super.key});
 

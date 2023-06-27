@@ -1,9 +1,12 @@
+import 'package:assignment/widgets/call_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../utils/home_screen_data.dart';
 
-class CountryNumbers extends StatelessWidget {
-  const CountryNumbers({super.key});
+/// Widget for [countries]
+class CountryCalls extends StatelessWidget {
+  const CountryCalls({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +27,8 @@ class CountryNumbers extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image:
-                          NetworkImage(homeScreenProvider.countryFlags[country]!),
+                      image: NetworkImage(
+                          homeScreenProvider.countryFlags[country]!),
                     ),
                   ),
                 ),
@@ -56,53 +59,10 @@ class CountryNumbers extends StatelessWidget {
                 children:
                     homeScreenProvider.countries[country]!.map((String item) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.phone_iphone_outlined,
-                          size: 28,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 14),
-                            ),
-                            const Text('New Jersey'),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor: Colors.blue,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor: Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
+                  padding: const EdgeInsets.all(8.0),
+                  child: CallItem(
+                    item: item,
+                  ));
             }).toList()),
           )
         ],

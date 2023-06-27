@@ -1,8 +1,8 @@
-import 'package:assignment/widgets/country_numbers.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:assignment/widgets/country_calls.dart';
 import '../widgets/search_input.dart';
-import 'package:flutter/material.dart';
 import '../utils/home_screen_data.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
             AnimatedOpacity(
               opacity: _isExpanded ? 1 : 0,
               duration: const Duration(milliseconds: 300),
-              child: const CountryNumbers(),
+              child: const CountryCalls(),
             )
           ],
         ),
